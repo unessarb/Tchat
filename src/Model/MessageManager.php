@@ -4,21 +4,18 @@ namespace App\Model;
 class MessageManager{
 
 
-   
-
     public static function getConversations($users,$id){
         
-        //    $userId =$_SESSION['user_id'];
-
         $db = getDb();
 
         $messages = [];
 
        foreach($users as $user){
             $data = [];
-            $q = $db->prepare("SELECT *
-            from message
-            where ( user_id =:current_user and destination =:destinataire) or (user_id=:destinataire and destination =:current_user )");
+            $q = $db->prepare(" SELECT *
+                                FROM message
+                                WHERE ( user_id =:current_user and destination =:destinataire) or (user_id=:destinataire and destination =:current_user )");
+                                
             $q->execute(["current_user"=>$id,"destinataire"=>$user->id]);
             $conversations = $q->fetchAll(\PDO::FETCH_OBJ);
             if($q->rowCount() != 0) {
@@ -36,34 +33,16 @@ class MessageManager{
         usort($messages, sortByCreatedDate('createdAt'));
         return $messages;
 
-
-
-       
-    //    $q = $db->prepare("SELECT message.contenu,message.createdAt,user.name,user.id from message
-    //    join
-    //    (select max(createdAt) maxtime,destination from message group by destination) latest
-    //    on message.createdAt=latest.maxtime and message.destination=latest.destination
-    //    JOIN user on message.destination = user.id
-    //    where message.user_id =?
-    //    GROUP by message.createdAt desc");
-       
-    //    $q->execute([$id]);
-        
-    //    $conversations = $q->fetchAll(\PDO::FETCH_OBJ);
-    //    $q->closeCursor();
-    //    return $conversations;
-
     }
 
 
     public static function getConversation($id,$curren_user){
         
-        //    $userId =$_SESSION['user_id'];
        $db = getDb();
        
-       $q = $db->prepare("SELECT *
-       from message
-       where ( user_id =:curren_user and destination =:id) or (user_id=:id and destination =:curren_user )");
+       $q = $db->prepare("  SELECT *
+                            FROM message
+                            WHERE ( user_id =:curren_user and destination =:id) or (user_id=:id and destination =:curren_user )");
        
        $q->execute(["id"=>$id,"curren_user"=>$curren_user]);
        $q->execute();
@@ -76,7 +55,6 @@ class MessageManager{
 
     public static function saveMessage($user,$message,$user_destinataire){
         
-        //    $userId =$_SESSION['user_id'];
        $db = getDb();
        
        $q = $db->prepare("INSERT INTO message(contenu,user_id,destination) VALUES (:message,:user_id,:user_destinataire)");

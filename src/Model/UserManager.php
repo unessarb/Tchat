@@ -12,7 +12,10 @@ class UserManager{
         $q->execute();
 
         $coutUsers=$q->rowCount();
+
+        //Remplissage de la base de données si'il y a aucun enregistrement
         if($coutUsers == 0){ 
+
             $q = $db->prepare("INSERT into user (name,email,password) VALUES(:name,:email,:password)");
             $q->execute([
                 "name"=>"Youness ARBOUH",
@@ -58,7 +61,7 @@ class UserManager{
         }
         
      }
-
+ 
     public static function getUsers($id){
         $db = getDb();
         $q = $db->prepare("SELECT * FROM user WHERE id <> ?");

@@ -8,7 +8,11 @@ class UserController
 {
 
     public static function login(){
+        
+        // Vérifier l'utilisateur s'il n'est pas connecté.
         require('src/auth/guest.php');
+
+        // Vérifier s'il existe des données dans la base de données.
         UserManager::checkDataBaseData();
 
         if(isset($_POST['login'])){

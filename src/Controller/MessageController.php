@@ -8,7 +8,10 @@ use App\Model\UserManager;
 class MessageController {
 
     public static function index(){
+
+        // Vérifier l'utilisateur s'il est connecté.
         require('src/auth/auth.php');
+        
         $currentUser=getSession("user_id");
         $users = UserManager::getUsers($currentUser);
         $messages = MessageManager::getConversations($users,$currentUser);
@@ -17,15 +20,15 @@ class MessageController {
     }
 
     public static function chat(){
+
+        // Vérifier l'utilisateur s'il est connecté.
         require('src/auth/auth.php');
 
         $currentUser=getSession("user_id");
         $id_destinataire = $_GET['id'];
 
         if(isset($_POST['send'])){
-            $errors = [];
             $message = e($_POST["message"]);
-
             MessageManager::saveMessage( $currentUser,$message,$id_destinataire);
         }
         else{
