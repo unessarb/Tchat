@@ -11,10 +11,10 @@ composer install
 composer dump-autoload
 ```
 
-Ensuite démarrer le serveur avec la commande :
+Ensuite deplacez vous dans le dossier du projet et démarrer le serveur avec la commande :
 
 ```bash
-php -S 127.0.0.1:8000
+php -S 127.0.0.1:8000 -t .
 ```
 
 Accéder sur l'application à travers [ce lien](http://127.0.0.1:8000/).
