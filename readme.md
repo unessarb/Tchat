@@ -1,4 +1,4 @@
-# CHAT APP => Test technique
+# CHAT APP WITH PHP
 
 Un Tchat, construit sur un modèle MVC, sans framework.
 
